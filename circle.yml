@@ -16,7 +16,6 @@ dependencies:
     - cat ~/.ssh/id_rsa.docker.pub > authorized_keys
   override:
     # - bundle install: # note ':' here
-        timeout: 300 # fail if command has no output for 3 minutes
   cache_directories:
     - "custom_1"   # relative to the build directory
     - "~/custom_2" # relative to the user's home directory
