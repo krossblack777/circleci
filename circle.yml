@@ -30,4 +30,3 @@ test:
     - echo "  User docker" >> ~/.ssh/config
     - bundle exec knife solo cook -o dstat circle
     - bundle exec rake spec:ci
-        timeout: 300
