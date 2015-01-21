@@ -38,9 +38,14 @@ test:
   pre:
     - docker build -t docker/test .
     - docker run -d --name test01 docker/test
-    - DOCKER_HOST=``
-  override :
-    - docker inspect --format 	' {{ .NetworkSettings.IPAddress }}' test01 | xargs -Ixxx bundle exec knife solo cook -o dstat docker@xxx
+    - DOCKER_HOST=`docker inspect --format 	' {{ .NetworkSettings.IPAddress }}' test01`
+    - echo "Host circle" >> ~/.ssh/config
+    - echo "  HostName ${DOCKER_HOST}}" >> ~/.ssh/config
+    - echo "  User docker" >> ~/.ssh/config
+  override:
+    - bundle exec knife solo cook -o dstat circle
+    - bundle exec rake spec:ci
+        timeout: 300
 
   post:
 
