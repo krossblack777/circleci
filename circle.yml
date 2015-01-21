@@ -24,10 +24,11 @@ test:
   override:
     - docker build -t docker/test .
     - docker run -d --name test01 docker/test
-    - DOCKER_HOST=`docker inspect --format 	' {{ .NetworkSettings.IPAddress }}' test01`
+    - export DOCKER_HOST=`docker inspect --format 	' {{ .NetworkSettings.IPAddress }}' test01`
     - echo "Host ci" >> ~/.ssh/config
-    - echo "  HostName ${DOCKER_HOST}}" >> ~/.ssh/config
+    - echo "  HostName ${DOCKER_HOST}" >> ~/.ssh/config
     - echo "  User docker" >> ~/.ssh/config
+    - echo "  IdentityFile ~/.ssh/id_rsa.docker" >> ~/.ssh/config
     - cat ~/.ssh/config
     - bundle exec knife solo cook -o dstat ci
     - bundle exec rake spec:ci
