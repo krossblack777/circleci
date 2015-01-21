@@ -38,9 +38,11 @@ test:
   pre:
     - docker build -t docker/test .
     - docker run -d --name test01 docker/test
+    - DOCKER_HOST=``
   override :
-  post:
+    - docker inspect --format 	' {{ .NetworkSettings.IPAddress }}' test01 | xargs -Ixxx bundle exec knife solo cook -o dstat docker@xxx
 
+  post:
 
 ## Custom notifications
 #notify:
