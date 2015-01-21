@@ -21,7 +21,7 @@ checkout:
 dependencies:
   pre:
     - ssh-keygen -t rsa -b 2048 -N "" -C "docker" -f  ~/.ssh/id_rsa.docker
-    - cat id_rsa.docker.pub > authorized_keys
+    - cat ~/.ssh/id_rsa.docker.pub > authorized_keys
 
   override:
     - bundle install: # note ':' here
