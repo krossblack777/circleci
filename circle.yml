@@ -29,5 +29,5 @@ test:
     - cat ~/.ssh/config
     - bundle exec knife solo prepare ci
     - bundle exec knife solo cook -o dstat ci
-        timeout: 300
+    - echo aaa
       #    - bundle exec rake spec:ci
