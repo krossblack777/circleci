@@ -21,11 +21,10 @@ test:
     - docker build -t docker/test .
     - docker run -d --name test01 docker/test
     - docker ps
-    - export DOCKER_HOST=`docker inspect --format 	' {{ .NetworkSettings.IPAddress }}' test01`
     - echo "Host ci" >> ~/.ssh/config
     - echo "  HostName ${DOCKER_HOST}" >> ~/.ssh/config
     - echo "  User docker" >> ~/.ssh/config
-    - docker inspect --format	' {{ .NetworkSettings.IPAddress }}' test01 | xargs -Ixxx echo "  Hostname xxx"
+    - docker inspect --format	' {{ .NetworkSettings.IPAddress }}' test01 | xargs -Ixxx echo "  Hostname xxx" >> ~/.ssh/config
     - echo "  IdentityFile ~/.ssh/id_rsa.docker" >> ~/.ssh/config
     - cat ~/.ssh/config
     - bundle exec knife solo cook -o dstat ci
