@@ -14,11 +14,8 @@ dependencies:
   pre:
     - ssh-keygen -t rsa -b 2048 -N "" -C "docker" -f  ~/.ssh/id_rsa.docker
     - cat ~/.ssh/id_rsa.docker.pub > authorized_keys
-  override:
+  #override:
     # - bundle install: # note ':' here
-  cache_directories:
-    - "custom_1"   # relative to the build directory
-    - "~/custom_2" # relative to the user's home directory
 test:
   override:
     - docker build -t docker/test .
