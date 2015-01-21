@@ -20,7 +20,8 @@ test:
   override:
     - docker build -t docker/test .
     - docker run -d --name test01 docker/test
-    - export DOCKER_HOST=`docker inspect --format 	' {{ .NetworkSettings.IPAddress }}' test01` && docker ps
+    - docker ps
+    - export DOCKER_HOST=`docker inspect --format 	' {{ .NetworkSettings.IPAddress }}' test01`
     - echo "Host ci" >> ~/.ssh/config
     - echo "  HostName ${DOCKER_HOST}" >> ~/.ssh/config
     - echo "  User docker" >> ~/.ssh/config
