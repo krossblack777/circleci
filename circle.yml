@@ -15,7 +15,7 @@ dependencies:
     - ssh-keygen -t rsa -b 2048 -N "" -C "docker" -f  ~/.ssh/id_rsa.docker
     - cat ~/.ssh/id_rsa.docker.pub > authorized_keys
   override:
-    - bundle install: # note ':' here
+    # - bundle install: # note ':' here
         timeout: 300 # fail if command has no output for 3 minutes
   cache_directories:
     - "custom_1"   # relative to the build directory
@@ -24,7 +24,7 @@ test:
   override:
     - docker build -t docker/test .
     - docker run -d --name test01 docker/test
-    - export DOCKER_HOST=`docker inspect --format 	' {{ .NetworkSettings.IPAddress }}' test01`
+    - export DOCKER_HOST=`docker inspect --format 	' {{ .NetworkSettings.IPAddress }}' test01` && docker ps
     - echo "Host ci" >> ~/.ssh/config
     - echo "  HostName ${DOCKER_HOST}" >> ~/.ssh/config
     - echo "  User docker" >> ~/.ssh/config
