@@ -28,6 +28,7 @@ test:
     - echo "Host ci" >> ~/.ssh/config
     - echo "  HostName ${DOCKER_HOST}" >> ~/.ssh/config
     - echo "  User docker" >> ~/.ssh/config
+    - docker inspect --format	' {{ .NetworkSettings.IPAddress }}' test01 | xargs -Ixxx echo "  Hostname xxx"
     - echo "  IdentityFile ~/.ssh/id_rsa.docker" >> ~/.ssh/config
     - cat ~/.ssh/config
     - bundle exec knife solo cook -o dstat ci
