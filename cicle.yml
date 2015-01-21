@@ -1,3 +1,49 @@
-test:
+## Customize the test machine
+machine:
+
+  timezone:
+    Asia/Tokyo
+
+  # Version of ruby to use
+  ruby:
+    version:
+      2.2.0
+  services:
+    - docker
+
+## Customize checkout
+checkout:
+  post:
+    - git submodule sync
+    - git submodule update --init # use submodules
+
+## Customize dependencies
+dependencies:
+  pre:
+    - ssh-keygen -t rsa -b 2048 -N "" -C "docker" -f  ~/.ssh/id_rsa.docker
+    - cat id_rsa.docker.pub > authorized_keys
+
   override:
-    - exit 0
+    - bundle install: # note ':' here
+        timeout: 300 # fail if command has no output for 3 minutes
+
+  # we automatically cache and restore many dependencies between
+  # builds. If you need to, you can add custom paths to cache:
+  cache_directories:
+    - "custom_1"   # relative to the build directory
+    - "~/custom_2" # relative to the user's home directory
+
+## Customize test commands
+test:
+  pre:
+    - docker build -t docker/test .
+    - docker run -d --name test01 docker/test
+  override :
+  post:
+
+
+## Custom notifications
+#notify:
+#  webhooks:
+    # A list of hashes representing hooks. Only the url field is supported.
+    #    - url: https://someurl.com/hooks/circle
