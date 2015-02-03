@@ -11,6 +11,8 @@ checkout:
     - git submodule sync
     - git submodule update --init # use submodules
 dependencies:
+  cache_directories:
+    - /var/lib/docker
   pre:
     - ssh-keygen -t rsa -b 2048 -N "" -C "docker" -f  ~/.ssh/id_rsa.docker
     - cat ~/.ssh/id_rsa.docker.pub > authorized_keys
@@ -20,7 +22,7 @@ test:
   override:
     - docker build -t docker/test .
     - cp ./ssh-config.circleci ~/.ssh/config
-    - docker run -d -p 40000 --name test01 docker/test
+    - docker run -d -p 40000:22 --name test01 docker/test
     - docker ps
     - bundle exec knife solo prepare ci
     - bundle exec knife solo cook -o dstat ci
