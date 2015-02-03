@@ -15,6 +15,7 @@ dependencies:
     - ~/docker/images
   pre:
     - mkdir -p ~/docker/images
+    - ln -s /var/lib/docker ~/docker/images
     - cp docker.circleci /etc/default/docker
     - ssh-keygen -t rsa -b 2048 -N "" -C "docker" -f  ~/.ssh/id_rsa.docker
     - cat ~/.ssh/id_rsa.docker.pub > authorized_keys
