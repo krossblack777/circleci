@@ -28,5 +28,4 @@ test:
     - docker ps
     - bundle exec knife solo prepare ci
     - bundle exec knife solo cook -o dstat ci
-    - echo aaa
-      #    - bundle exec rake spec:ci
+    - bundle exec rake spec:ci
