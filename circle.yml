@@ -15,7 +15,8 @@ dependencies:
     - ~/docker/images
   pre:
     - mkdir -p ~/docker/images
-    - ln -s /var/lib/docker ~/docker/images
+    - if [ ! -e ~/docker/images ] ;then ln -s /var/lib/docker ~/docker/images ;fi
+    - ls ~/docker/images
     - ssh-keygen -t rsa -b 2048 -N "" -C "docker" -f  ~/.ssh/id_rsa.docker
     - cat ~/.ssh/id_rsa.docker.pub > authorized_keys
     - docker build -t docker/test .
