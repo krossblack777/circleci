@@ -19,14 +19,9 @@ dependencies:
 test:
   override:
     - docker build -t docker/test .
-    - docker run -d --name test01 docker/test
+    - cp ./ssh-config.circleci ~/.ssh/config
+    - docker run -d -p 40000 --name test01 docker/test
     - docker ps
-    - echo "Host ci" >> ~/.ssh/config
-    - echo "  HostName ${DOCKER_HOST}" >> ~/.ssh/config
-    - echo "  User docker" >> ~/.ssh/config
-    - docker inspect --format	' {{ .NetworkSettings.IPAddress }}' test01 | xargs -Ixxx echo "  Hostname xxx" >> ~/.ssh/config
-    - echo "  IdentityFile ~/.ssh/id_rsa.docker" >> ~/.ssh/config
-    - cat ~/.ssh/config
     - bundle exec knife solo prepare ci
     - bundle exec knife solo cook -o dstat ci
     - echo aaa
