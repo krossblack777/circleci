@@ -12,10 +12,10 @@ checkout:
     - git submodule update --init # use submodules
 dependencies:
   cache_directories:
-    - /var/lib/docker
-    - ~/aaaaa # test
-    - /tmp/aaa # test
+    - ~/docker/images
   pre:
+    - mkdir -p ~/docker/images
+    - cp docker.circleci /etc/default/docker
     - ssh-keygen -t rsa -b 2048 -N "" -C "docker" -f  ~/.ssh/id_rsa.docker
     - cat ~/.ssh/id_rsa.docker.pub > authorized_keys
     - docker build -t docker/test .
