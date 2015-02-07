@@ -20,7 +20,7 @@ dependencies:
     #- ssh-keygen -t rsa -b 2048 -N "" -C "docker" -f  ~/.ssh/id_rsa.docker
     #- cat ~/.ssh/id_rsa.docker.pub > authorized_keys
     #- docker build -t docker/test .
-    cp id_rsa.docker ~/.ssh/
+    - cp id_rsa.docker ~/.ssh/
   #override:
     # - bundle install: # note ':' here
 test:
