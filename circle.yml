@@ -21,6 +21,8 @@ dependencies:
     #- cat ~/.ssh/id_rsa.docker.pub > authorized_keys
     #- docker build -t docker/test .
     - cp id_rsa.docker ~/.ssh/
+    - ls -la ~/.ssh/
+    - sudo chown 600 ~/.ssh/id_rsa.docker
   #override:
     # - bundle install: # note ':' here
 test:
