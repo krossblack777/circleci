@@ -11,20 +11,22 @@ checkout:
     - git submodule sync
     - git submodule update --init # use submodules
 dependencies:
-  cache_directories:
-    - ~/docker/images
+  #cache_directories:
+  #  - ~/docker/images
   pre:
-    - mkdir -p ~/docker/images
-    - if [ ! -e ~/docker/images ] ;then ln -s /var/lib/docker ~/docker/images ;fi
-    - ls ~/docker/images
-    - ssh-keygen -t rsa -b 2048 -N "" -C "docker" -f  ~/.ssh/id_rsa.docker
-    - cat ~/.ssh/id_rsa.docker.pub > authorized_keys
-    - docker build -t docker/test .
+    #  - mkdir -p ~/docker/images
+    #- if [ ! -e ~/docker/images ] ;then ln -s /var/lib/docker ~/docker/images ;fi
+    #- ls ~/docker/images
+    #- ssh-keygen -t rsa -b 2048 -N "" -C "docker" -f  ~/.ssh/id_rsa.docker
+    #- cat ~/.ssh/id_rsa.docker.pub > authorized_keys
+    #- docker build -t docker/test .
+    cp id_rsa.docker ~/.ssh/
   #override:
     # - bundle install: # note ':' here
 test:
   override:
     - cp ./ssh-config.circleci ~/.ssh/config
+    - docker pull krossblack777/dockerhub-test:latest
     - docker run -d -p 40000:22 --name test01 docker/test
     - docker ps
     - bundle exec knife solo prepare ci
