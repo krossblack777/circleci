@@ -28,7 +28,8 @@ test:
     - cp ./ssh-config.circleci ~/.ssh/config
     - docker pull krossblack777/dockerhub-test:latest
     - docker run -d -p 40000:22 --name test01 krossblack777/dockerhub-test
-    - docker ps
+    - cat ~/.ssh/config
+    - ls ~/.ssh/
     - bundle exec knife solo prepare ci
     - bundle exec knife solo cook -o dstat ci
     - bundle exec rake spec:ci
