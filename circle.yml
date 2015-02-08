@@ -11,8 +11,6 @@ checkout:
     - git submodule sync
     - git submodule update --init # use submodules
 dependencies:
-  cache_directories:
-    - ../../../var/lib/docker
   pre:
     #  - mkdir -p ~/docker/images
     #- if [ ! -e ~/docker/images ] ;then ln -s /var/lib/docker ~/docker/images ;fi
