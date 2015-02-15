@@ -28,4 +28,6 @@ test:
     - docker pull krossblack777/dockerhub-test:latest
     - docker run -d -p 40000:22 --name test01 krossblack777/dockerhub-test
     - bundle exec knife solo cook -o dstat ci
+    - ssh ci -C "sed -ri 's/#UsePAM yes/UsePAM yes/g' /etc/ssh/sshd_config"
+    - ssh ci -C "sed -ri 's/UsePAM no/#UsePAM no/g' /etc/ssh/sshd_config"
     - bundle exec rake spec:ci
