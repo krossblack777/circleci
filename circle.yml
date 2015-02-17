@@ -1,4 +1,7 @@
 machine:
+  pre:
+    - sudo sed -i 's/GSSAPIAuthentication yes/GSSAPIAuthentication no/g' /etc/ssh/ssh_config
+    - cat /etc/ssh/ssh_config
   timezone:
     Asia/Tokyo
   ruby:
@@ -20,12 +23,12 @@ dependencies:
     #- docker build -t docker/test .
     - cp id_rsa.docker ~/.ssh/
     - sudo chown 600 ~/.ssh/id_rsa.docker
+    - cp ./ssh-config.circleci ~/.ssh/config
+    - docker pull krossblack777/dockerhub-test:latest
   #override:
     # - bundle install: # note ':' here
 test:
   override:
-    - cp ./ssh-config.circleci ~/.ssh/config
-    - docker pull krossblack777/dockerhub-test:latest
     - docker run -d -p 40000:22 --name test01 krossblack777/dockerhub-test
     - bundle exec knife solo cook -o dstat ci
     - bundle exec rake spec:ci
