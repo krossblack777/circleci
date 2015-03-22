@@ -1,40 +1,37 @@
 # Dockerfile
-FROM centos:centos6
+FROM centos:centos7
 
 MAINTAINER test
 
 RUN yum update -y
 
 # install package
-RUN yum -y install vim git
-RUN yum -y install passwd openssh openssh-server openssh-clients sudo
+RUN yum -y install vim git install passwd openssh openssh-server openssh-clients sudo && \
 
 # Create user
-RUN useradd docker
-RUN passwd -f -u docker
+    useradd docker && \
+    passwd -f -u docker && \
 
 # Set up SSH
-RUN mkdir -p /home/docker/.ssh; chown docker /home/docker/.ssh; chmod 700 /home/docker/.ssh
-ADD authorized_keys /home/docker/.ssh/authorized_keys
+    mkdir -p /home/docker/.ssh; chown docker /home/docker/.ssh; chmod 700 /home/docker/.ssh && \
+    echo  "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDQe+FW4YorDLia4g0SymlWt4ULvrbJa78sP/E65aDHD0wToaFgoi1a2Y5qzC8LmEearZYG02J8MOVDb5of3Va8Wo8TAPIftTOEMoP1l9Il5hku+qqLEsTzYZtBPB7B85sJ7l10giLZDUBryzJv98H7QjJ3nLq8/Yi6u3CZQeVtwniRBDFWCAuFY1O7oPHeVKM3Oi/I7nOCBzqP6PVY+QoAhlw0wF/fxyeGWHIeWVq7KNgwMdXwXCjHhZpjL8zNBfFRrH1QxZx8EHz+aZnlgR6GvKNobOBItc6gpDnV+st7xhADLD0v5Q9F+eMAAMbDMrfzi2uOcNQV4ujK8lOhaEAl docker" > /home/docker/.ssh/authorized_keys && \
 
-RUN chown docker /home/docker/.ssh/authorized_keys
-RUN chmod 600 /home/docker/.ssh/authorized_keys
+    chown docker /home/docker/.ssh/authorized_keys && \
+    chmod 600 /home/docker/.ssh/authorized_keys && \
 
 # setup sudoers
-RUN echo "docker ALL=(ALL) ALL" >> /etc/sudoers.d/docker
+    echo "docker ALL=(ALL) ALL" >> /etc/sudoers.d/docker && \
 
 # Set up SSHD config
+    sed -ri 's/#PermitRootLogin yes/PermitRootLogin yes/g' /etc/ssh/sshd_config && \
+    sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config && \
+    sed -ri 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config && \
 
-RUN sed -ri 's/#PermitRootLogin yes/PermitRootLogin yes/g' /etc/ssh/sshd_config
-RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
-RUN sed -ri 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config
+# pam認証が有効でもログインできるように
+    sed -i -e 's/^\(session.*pam_loginuid.so\)/#\1/g' /etc/pam.d/sshd && \
 
-
-# Init SSHD
-RUN /etc/init.d/sshd start
-RUN /etc/init.d/sshd stop
-
-#
-#EXPOSE 22
+# 再起動
+    /etc/init.d/sshd start
+    /etc/init.d/sshd stop
 
 CMD ["/usr/sbin/sshd","-D"]
