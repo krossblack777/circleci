@@ -1,5 +1,5 @@
 # Dockerfile
-FROM centos:centos7
+FROM centos:centos6
 
 MAINTAINER test
 
@@ -7,6 +7,7 @@ RUN yum update -y
 
 # install package
 RUN yum -y install vim git install passwd openssh openssh-server openssh-clients sudo && \
+yum clean all && \
 
 # Create user
     useradd docker && \
@@ -31,7 +32,7 @@ RUN yum -y install vim git install passwd openssh openssh-server openssh-clients
     sed -i -e 's/^\(session.*pam_loginuid.so\)/#\1/g' /etc/pam.d/sshd && \
 
 # 再起動
-    /etc/init.d/sshd start
-    /etc/init.d/sshd stop
+/etc/init.d/sshd stop && \
+/etc/init.d/sshd start
 
 CMD ["/usr/sbin/sshd","-D"]
