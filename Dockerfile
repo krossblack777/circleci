@@ -31,6 +31,9 @@ yum clean all && \
 # pam認証が有効でもログインできるように
     sed -i -e 's/^\(session.*pam_loginuid.so\)/#\1/g' /etc/pam.d/sshd && \
 
+# chefをインストール
+curl -L https://www.chef.io/chef/install.sh | bash && \
+
 # 再起動
 /etc/init.d/sshd stop && \
 /etc/init.d/sshd start
