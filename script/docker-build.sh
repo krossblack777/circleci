@@ -8,7 +8,7 @@ else
   mkdir -p $HOME/cache
   docker build -t docker/centos .
   md5sum Dockerfile  > $HOME/cache/dockerfile.digest
-  docker save docker/centos > $HOME/cache/centos-sshd.tar
+  docker save docker/centos > $HOME/cache/centos.tar
 fi
 
 docker info
