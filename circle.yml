@@ -18,4 +18,4 @@ test:
   pre:
     - bundle exec knife solo cook -o dstat ci
   override:
-  - bundle exec rake spec:ci
+    - bundle exec rake spec:ci

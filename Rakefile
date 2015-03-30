@@ -21,7 +21,7 @@ end
 
 namespace :spec do
   desc "Run serverspec to all hosts"
-  task :all => hosts.map{|h| 'spec:' + h[:short_name] } 
+  task :all => hosts.map{|h| 'spec:' + h[:short_name] }
   hosts.each do |host|
     desc "Run serverspec tests to #{host[:name]}"
     ServerspecTask.new(host[:short_name].to_sym) do |t|
