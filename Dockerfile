@@ -13,10 +13,10 @@ RUN useradd docker && \
 
 ## Set up SSH
     mkdir -p /home/docker/.ssh && chown docker /home/docker/.ssh && chmod 700 /home/docker/.ssh && \
-    echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDD9xrvnB5hR3eecNNAmWSmCAKz3ltUHHvw7yoaJFDMX3Bvq2o97XaUF9GlO188lBO0oPDm7w3R7UnmWFij7v0dPOkzDbH2HEUGR4KiG5AFYpv5zfXbtQ9C586M6raI6hrcjJbg4+sVHiZYEZEJ8zWYoNVI1g/v13UlHCbXHPM9VvZnR1MKoIKE63eNqH7OY1YOg5fg5tgaxU3RQsBn7oXxrZcy4QSOHEBH4LP/Vb9B69OKVJetSpJEg1Ul2DhueJKcXROqGtGeB36zBn6cATKRGs02Pvw2bU7fImmZ0/lQZpJoN9NSN5Kw+SY1el/WVC3GXWR5Q8mFqn4FjI9fmyo3 docker" \
+    echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDQe+FW4YorDLia4g0SymlWt4ULvrbJa78sP/E65aDHD0wToaFgoi1a2Y5qzC8LmEearZYG02J8MOVDb5of3Va8Wo8TAPIftTOEMoP1l9Il5hku+qqLEsTzYZtBPB7B85sJ7l10giLZDUBryzJv98H7QjJ3nLq8/Yi6u3CZQeVtwniRBDFWCAuFY1O7oPHeVKM3Oi/I7nOCBzqP6PVY+QoAhlw0wF/fxyeGWHIeWVq7KNgwMdXwXCjHhZpjL8zNBfFRrH1QxZx8EHz+aZnlgR6GvKNobOBItc6gpDnV+st7xhADLD0v5Q9F+eMAAMbDMrfzi2uOcNQV4ujK8lOhaEAl docker" \
 > /home/docker/.ssh/authorized_keys  && \
     chown docker /home/docker/.ssh/authorized_keys && \
-    chmod 600 /home/docker/.ssh/authorized_keys > /home/docker/.ssh/authorized_keys && \
+    chmod 600 /home/docker/.ssh/authorized_keys && \
 ## setup sudoers
     echo "docker ALL=(ALL) ALL" >> /etc/sudoers.d/docker && \
 
@@ -28,7 +28,4 @@ RUN useradd docker && \
 ## Pam認証が有効でもログインするための設定
     sed -i -e 's/^\(session.*pam_loginuid.so\)/#\1/g' /etc/pam.d/sshd && \
 
-    echo "ALL : ALL" > /etc/hosts.allow
-
-    cd /tmp && \
     curl -L https://www.chef.io/chef/install.sh | bash
