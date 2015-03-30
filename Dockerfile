@@ -29,3 +29,5 @@ RUN useradd docker && \
     sed -i -e 's/^\(session.*pam_loginuid.so\)/#\1/g' /etc/pam.d/sshd && \
 
     curl -L https://www.chef.io/chef/install.sh | bash
+
+    systemctl start sshd.service
