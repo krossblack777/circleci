@@ -6,7 +6,7 @@ then
   docker load < $HOME/cache/centos.tar
 else
   mkdir -p $HOME/cache
-  docker build -t docker/centos.
+  docker build -t docker/centos .
   md5sum Dockerfile  > $HOME/cache/dockerfile.digest
   docker save docker/centos> $HOME/cache/centos.tar
 fi
