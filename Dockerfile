@@ -2,9 +2,9 @@ FROM tjinjin/centos7
 MAINTAINER krossblack
 
 # package
-RUN yum update -y && \
-    yum install -y bzip logrotate make net-tools nfs-utils openssh openssh-clients openssh-server \
+RUN yum install -y bzip logrotate make net-tools nfs-utils openssh openssh-clients openssh-server \
     openssl passwd rsync rsyslog sudo tar wget && \
+    yum update -y && \
     yum clean all
 
 ## Create user
