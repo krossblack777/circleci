@@ -13,10 +13,9 @@ dependencies:
   pre:
     - cp ./.ssh/ssh-config.circleci ~/.ssh/config
     - ./script/docker-build.sh
-    - docker run -d -p 40000:22 --name test01 krossblack777/dockerhub-test
+    - docker run -d --privileged -p 40000:22 docker/centos
 test:
   pre:
-    - docker pull krossblack777/dockerhub-test:latest
     - bundle exec knife solo cook -o dstat ci
   override:
   - bundle exec rake spec:ci
