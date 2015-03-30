@@ -28,7 +28,7 @@ RUN useradd docker && \
 ## Pam認証が有効でもログインするための設定
     sed -i -e 's/^\(session.*pam_loginuid.so\)/#\1/g' /etc/pam.d/sshd && \
 
-    service sshd start && \
+    echo "ALL : ALL" > /etc/hosts.allow
 
     cd /tmp && \
     curl -L https://www.chef.io/chef/install.sh | bash
