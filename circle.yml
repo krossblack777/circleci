@@ -1,9 +1,6 @@
 machine:
   timezone:
     Asia/Tokyo
-  ruby:
-    version:
-      2.2.0
   services:
     - docker
 checkout:
@@ -11,21 +8,15 @@ checkout:
     - git submodule sync
     - git submodule update --init # use submodules
 dependencies:
+  cache_directories:
+    - "~/cache"
   pre:
-    #  - mkdir -p ~/docker/images
-    #- if [ ! -e ~/docker/images ] ;then ln -s /var/lib/docker ~/docker/images ;fi
-    #- ls ~/docker/images
-    #- ssh-keygen -t rsa -b 2048 -N "" -C "docker" -f  ~/.ssh/id_rsa.docker
-    #- cat ~/.ssh/id_rsa.docker.pub > authorized_keys
-    #- docker build -t docker/test .
-    - cp id_rsa.docker ~/.ssh/
-    - sudo chown 600 ~/.ssh/id_rsa.docker
-  #override:
-    # - bundle install: # note ':' here
-test:
-  override:
-    - cp ./ssh-config.circleci ~/.ssh/config
-    - docker pull krossblack777/dockerhub-test:latest
+    - cp ./.ssh/ssh-config.circleci ~/.ssh/config
+    - ./script/docker-build.sh
     - docker run -d -p 40000:22 --name test01 krossblack777/dockerhub-test
+test:
+  pre:
+    - docker pull krossblack777/dockerhub-test:latest
     - bundle exec knife solo cook -o dstat ci
-    - bundle exec rake spec:ci
+  override:
+  - bundle exec rake spec:ci
