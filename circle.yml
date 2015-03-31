@@ -13,7 +13,7 @@ dependencies:
   pre:
     - cp ./.ssh/ssh-config.circleci ~/.ssh/config
     - ./script/docker-build.sh
-    - docker run -d --privileged -p 40000:22 docker/centos
+    - docker run -d --privileged -p 40000:22 --entry-point="/usr/sbin/sshd -D" docker/centos
 test:
   pre:
     - bundle exec knife solo cook -o dstat ci
