@@ -20,4 +20,4 @@ test:
     - bundle exec knife solo cook -o dstat ci-docker01
     - bundle exec knife solo cook -o dstat ci-docker02
   override:
-    - bundle exec rake spec:ci01 rake spec:ci02
+    - bundle exec rake spec:ci01 spec:ci02
