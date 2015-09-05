@@ -17,7 +17,7 @@ dependencies:
     - docker run -d --privileged -p 40001:22  docker/centos
 test:
   pre:
-    - bundle exec knife solo cook -o dstat ci-docker01
-    - bundle exec knife solo cook -o dstat ci-docker02
+    - bundle exec knife solo cook -o dstat ci-docker01 --ssh-control-master no
+    - bundle exec knife solo cook -o dstat ci-docker02 --ssh-control-master no
   override:
     - bundle exec rake spec:ci01 spec:ci02
