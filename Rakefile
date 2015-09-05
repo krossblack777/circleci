@@ -4,12 +4,12 @@ require 'ci/reporter/rake/rspec'
 
 hosts = [
   {
-    name:       'ci01',
+    name:       'ci-docker01',
     short_name: 'ci01',
     role:       'ci'
   },
   {
-    name:       'ci02',
+    name:       'ci-docker02',
     short_name: 'ci02',
     role:       'ci'
   },
