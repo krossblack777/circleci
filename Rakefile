@@ -4,10 +4,15 @@ require 'ci/reporter/rake/rspec'
 
 hosts = [
   {
-    name:       'ci',
-    short_name: 'ci',
+    name:       'ci01',
+    short_name: 'ci01',
     role:       'ci'
-  }
+  },
+  {
+    name:       'ci02',
+    short_name: 'ci02',
+    role:       'ci'
+  },
 ]
 
 class ServerspecTask < RSpec::Core::RakeTask

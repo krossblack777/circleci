@@ -1,4 +1,4 @@
-FROM tjinjin/centos7
+FROM centos:centos6
 MAINTAINER krossblack
 
 # package
@@ -26,4 +26,13 @@ RUN useradd docker && \
     sed -ri 's/^UsePAM yes/#UsePAM no/g' /etc/ssh/sshd_config && \
 
 ## Pam認証が有効でもログインするための設定
-    sed -i -e 's/^\(session.*pam_loginuid.so\)/#\1/g' /etc/pam.d/sshd
+    sed -i -e 's/^\(session.*pam_loginuid.so\)/#\1/g' /etc/pam.d/sshd && \
+
+    cd /tmp && \
+    curl -L https://www.chef.io/chef/install.sh | bash && \
+
+## Init SSHD
+    /etc/init.d/sshd start && \
+    /etc/init.d/sshd stop
+
+CMD /usr/sbin/sshd -D
